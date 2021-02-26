@@ -2,7 +2,8 @@ const Customer = require('../infra/mongoose/models/index.js');
 
 exports.create = async(nome, cpf, email, celular, endereco) => {
 
-    try{const customerModel = new Customer({
+    try{
+        const customerModel = new Customer({
         nome,
         cpf,
         celular,
@@ -10,9 +11,11 @@ exports.create = async(nome, cpf, email, celular, endereco) => {
         endereco
     });
 
-    await customerModel.save();
+        await customerModel.save();
 
-    return customerModel;}catch(err){
+        return customerModel;
+    }
+    catch(err){
         throw new Error(err.message)
     }
 
@@ -20,9 +23,14 @@ exports.create = async(nome, cpf, email, celular, endereco) => {
 
 exports.read = async() => {
 
-    try{const customers = await Customer.find();
+    try{
+        
+        const customers = await Customer.find();
 
-    return customers;}catch(err){
+        return customers;
+    
+    }
+    catch(err){
         throw new Error('Customers not found')
     }
 
@@ -52,15 +60,14 @@ exports.update = async(_id, nome, email, cpf, endereco, celular) => {
 
 exports.delete = async(_id) => {
 
-    const customer = await Customer.findById(_id)
+
+    const customer = await Customer.findByIdAndRemove(_id)
 
     if(!customer) {
         throw new Error('Customer do not exists')
     }
 
-    await Customer.findByIdAndRemove(_id)
-
-    return 'Customer Removed';
+    return customer;
 
    
 

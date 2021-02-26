@@ -32,12 +32,17 @@ customersRouter.post('/create', async(request, response) => {
 customersRouter.put('/update/:_id', async(request, response) => {
 
 
-    try{const { _id } = request.params
-    const { nome, email, cpf, endereco, celular} = request.body;
+    try{
+        
+        const { _id } = request.params
+        const { nome, email, cpf, endereco, celular} = request.body;
 
-    const customer = await CustomersController.update(_id, nome, email, cpf, endereco, celular)
+        const customer = await CustomersController.update(_id, nome, email, cpf, endereco, celular)
 
-    return response.status(200).json(customer);}catch(err){
+        return response.status(200).json(customer);
+    }
+    
+    catch(err){
         return response.status(406).json({error: err.message})
     }
 
@@ -46,11 +51,18 @@ customersRouter.put('/update/:_id', async(request, response) => {
 
 customersRouter.delete('/delete/:_id', async(request, response) => {
 
-    try{const { _id } = request.params
+    try{
+        
+        const { _id } = request.params
 
-    const deleteResponse = await CustomersController.delete(_id)
+        const removedCustomer = await CustomersController.delete(_id)
 
-    return response.status(200).json({delete: deleteResponse})}catch(err){
+        return response.status(410).json({
+            delete: removedCustomer,
+            message: 'Was deleted'
+        })
+    }
+    catch(err){
         console.log(err)
         return response.status(410).json({error: err.message})
     }
