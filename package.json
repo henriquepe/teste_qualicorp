@@ -12,6 +12,7 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
+    "start": "NODE_ENV=production node -r dotenv/config ./src/shared/infra/http/index.js",
     "dev:start": "NODE_ENV=production nodemon -r dotenv/config ./src/shared/infra/http/index.js"
   }
 }
